@@ -41,7 +41,7 @@ module "roamjs_lambda" {
   source    = "dvargas92495/lambda/roamjs"
 
   name = "example"
-  paths = [
+  lambdas = [
     { 
       path = "resource", 
       method = "get"
@@ -63,6 +63,7 @@ module "roamjs_lambda" {
 - `aws_secret_token` - The AWS Secret Token to access RoamJS.
 - `github_token` - The github token to access your extension's repository.
 - `developer_token` - The developer token to access your extension's path.
+- `lambdas`
 
 ## Output
 

@@ -156,7 +156,7 @@ resource "aws_api_gateway_integration_response" "mock" {
   rest_api_id = data.aws_api_gateway_rest_api.rest_api.id
   resource_id = aws_api_gateway_resource.resource[each.value].id
   http_method = aws_api_gateway_method.options[each.value].http_method
-  status_code = aws_api_gateway_method_response[each.value].mock.status_code
+  status_code = aws_api_gateway_method_response.mock[each.value].status_code
 
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers"     = "'Authorization, Content-Type'",
