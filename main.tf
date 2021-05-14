@@ -1,3 +1,16 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 2.7.0"
+    }
+    github = {
+      source = "integrations/github"
+      version = "4.2.0"
+    }
+  }
+}
+
 variable "aws_access_token" {
   type = string
 }
