@@ -76,7 +76,7 @@ resource "aws_lambda_function" "lambda_function" {
 
   function_name = "RoamJS_${var.lambdas[count.index].path}_${lower(var.lambdas[count.index].method)}"
   role          = data.aws_iam_role.roamjs_lambda_role.arn
-  handler       = "${var.lambdas[count.index].path}.handler"
+  handler       = "${var.lambdas[count.index].path}_${lower(var.lambdas[count.index].method)}.handler"
   filename      = data.archive_file.dummy.output_path
   runtime       = "nodejs12.x"
   publish       = false
