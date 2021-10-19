@@ -78,7 +78,7 @@ resource "aws_lambda_function" "lambda_function" {
   role          = data.aws_iam_role.roamjs_lambda_role.arn
   handler       = "${var.lambdas[count.index].path}_${lower(var.lambdas[count.index].method)}.handler"
   filename      = data.archive_file.dummy.output_path
-  runtime       = "nodejs12.x"
+  runtime       = "nodejs14.x"
   publish       = false
   timeout       = 10
 
@@ -174,8 +174,7 @@ resource "aws_api_gateway_integration_response" "mock" {
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers"     = "'Authorization, Content-Type'",
     "method.response.header.Access-Control-Allow-Methods"     = "'GET,DELETE,OPTIONS,POST,PUT'",
-    "method.response.header.Access-Control-Allow-Origin"      = "'*'",
-    "method.response.header.Access-Control-Allow-Credentials" = "'true'"
+    "method.response.header.Access-Control-Allow-Origin"      = "'https://roamresearch.com'"
   }
 }
 
