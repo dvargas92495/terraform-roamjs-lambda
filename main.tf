@@ -38,10 +38,9 @@ variable "name" {
   type = string
 }
 
-locals {
-  resources = distinct([
-    for lambda in var.lambdas: lambda.path
-  ])
+variable "role_arn" {
+  type = string
+  default = ""
 }
 
 # lambda resource requires either filename or s3... wow
@@ -57,6 +56,14 @@ data "archive_file" "dummy" {
 
 data "aws_iam_role" "roamjs_lambda_role" {
   name = "roam-js-extensions-lambda-execution"
+}
+
+locals {
+  resources = distinct([
+    for lambda in var.lambdas: lambda.path
+  ])
+
+  role_arn = length(var.role_arn) > 0 ? var.role_arn : data.aws_iam_role.roamjs_lambda_role.arn 
 }
 
 data "aws_api_gateway_rest_api" "rest_api" {
@@ -75,7 +82,7 @@ resource "aws_lambda_function" "lambda_function" {
   count    = length(var.lambdas)
 
   function_name = "RoamJS_${var.lambdas[count.index].path}_${lower(var.lambdas[count.index].method)}"
-  role          = data.aws_iam_role.roamjs_lambda_role.arn
+  role          = local.role_arn
   handler       = "${var.lambdas[count.index].path}_${lower(var.lambdas[count.index].method)}.handler"
   filename      = data.archive_file.dummy.output_path
   runtime       = "nodejs14.x"
