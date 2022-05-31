@@ -85,7 +85,7 @@ resource "aws_lambda_function" "lambda_function" {
   role          = local.role_arn
   handler       = "${var.lambdas[count.index].path}_${lower(var.lambdas[count.index].method)}.handler"
   filename      = data.archive_file.dummy.output_path
-  runtime       = "nodejs14.x"
+  runtime       = "nodejs16.x"
   publish       = false
   timeout       = 10
 
