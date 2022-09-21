@@ -32,6 +32,7 @@ variable "lambdas" {
     path = string
     method = string
     size = optional(number, 128)
+    timeout = optional(number, 10)
   }))
 }
 
@@ -88,7 +89,7 @@ resource "aws_lambda_function" "lambda_function" {
   filename      = data.archive_file.dummy.output_path
   runtime       = "nodejs16.x"
   publish       = false
-  timeout       = 10
+  timeout       = var.lambdas[count.index].timeout
   memory_size   = var.lambdas[count.index].size
 
   tags = {
