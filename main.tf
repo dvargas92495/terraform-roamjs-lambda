@@ -89,7 +89,7 @@ resource "aws_lambda_function" "lambda_function" {
   runtime       = "nodejs16.x"
   publish       = false
   timeout       = 10
-  size          = var.lambdas[count.index].size
+  memory_size   = var.lambdas[count.index].size
 
   tags = {
     Application = "Roam JS Extensions"
