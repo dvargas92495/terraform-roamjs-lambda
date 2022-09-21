@@ -31,6 +31,7 @@ variable "lambdas" {
   type = list(object({
     path = string
     method = string
+    size = optional(number)
   }))
 }
 
@@ -88,6 +89,7 @@ resource "aws_lambda_function" "lambda_function" {
   runtime       = "nodejs16.x"
   publish       = false
   timeout       = 10
+  size          = can(var.lambdas[count.index].size) ? var.lambdas[count.index].size : 128
 
   tags = {
     Application = "Roam JS Extensions"
